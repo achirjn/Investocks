@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/output.css">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+    <title>Welcom</title>
+</head>
+
+<body>
+    <div th:replace="~{header :: header('Log Out','User')}"></div>
+    <div th:replace="~{navbar :: navbar}"></div>
+    <div class="p-7 m-7">
+        <div class="flex">
+            <div>
+                <a href="#"
+                    class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy
+                        technology
+                        acquisitions 2021</h5>
+                    <p class="font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology
+                        acquisitions of 2021 so far, in reverse chronological order.</p>
+                </a>
+            </div>
+            <div>
+                <a href="#"
+                    class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy
+                        technology
+                        acquisitions 2021</h5>
+                    <p class="font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology
+                        acquisitions of 2021 so far, in reverse chronological order.</p>
+                </a>
+            </div>
+            <div>
+                <a href="#"
+                    class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy
+                        technology
+                        acquisitions 2021</h5>
+                    <p class="font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology
+                        acquisitions of 2021 so far, in reverse chronological order.</p>
+                </a>
+            </div>
+
+        </div>
+
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            Company
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Closed Price
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Current Price
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Profit
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Circuit Limit
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Sector
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Buy
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Sell
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="company : ${companies}"
+                        class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200">
+                        <th th:text="${company.name}" scope="row"
+                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        </th>
+                        <td th:text="${company.closedPrice}" class="px-6 py-4">
+                        </td>
+                        <td th:text="${company.currentPrice}" class="px-6 py-4">
+                        </td>
+                        <td th:text="${company.profit}" class="px-6 py-4">
+                        </td>
+                        <td th:text="${company.circuitLimit}" class="px-6 py-4">
+                        </td>
+                        <td th:text="${company.sector}" class="px-6 py-4">
+                        </td>
+                        <td class="px-6 py-4">
+                            <a th:href="@{/user/order/buy(company=${company.name})}"
+                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Buy</a>
+                        </td>
+                        <td class="px-6 py-4">
+                            <a th:href="@{/user/order/sell(company=${company.name})}"
+                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Sell</a>
+                        </td>
+                    </tr>
+
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+</body>
+
+</html>
