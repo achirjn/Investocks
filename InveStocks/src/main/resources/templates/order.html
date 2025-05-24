@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/output.css">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+    <title th:text="*{pageType}"></title>
+</head>
+
+<body class="dark:bg-gray-600">
+
+    <div th:replace="~{header :: header('Log Out','User')}"></div>
+    <div th:replace="~{navbar :: navbar}"></div>
+
+
+    <div class="flex justify-center items-center mt-5">
+        <div
+            class="w-full  max-w-sm  bg-white border border-gray-200 rounded-lg shadow-sm  sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+            <form class="space-y-3" th:action="@{/user/placeOrder}" method="post">
+                <div th:replace="~{message :: message}"></div>
+                <h5 class="text-2xl font-medium text-gray-900 dark:text-white">Order here...</h5>
+                <!-- <div th:if="${param.error}" class="text-red-700">
+                    Invalid username and password.</div>
+                <div th:if="${param.logout}" class="text-green-700">
+                    You have been logged out.</div> -->
+                <div>
+                    <label for="companyName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Company Name</label>
+                    <input type="text" name="companyName" id="companyName"
+                        th:value="${company}"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                        placeholder="Company Name" />
+                </div>
+                <div>
+                    <label for="action" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Action</label>
+                    <select name="action" id="action" placeholder="Action"
+                        th:value="${action}"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" >
+                        <option value="Buy">Buy</option>
+                        <option value="Sell">Sell</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
+                    <input type="number" name="price" id="price" placeholder="0"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
+                </div>
+                <div>
+                    <label for="quantity" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Quantity</label>
+                    <input type="number" name="quantity" id="quantity" placeholder="0"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
+                </div>
+                <button type="submit"
+                    class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm my-2 px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Place Order</button>
+                <button type="reset"
+                    class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm my-2 px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Reset</button>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- </div> -->
+
+
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+</body>
+
+</html>

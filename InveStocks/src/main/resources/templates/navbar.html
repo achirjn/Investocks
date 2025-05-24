@@ -1,0 +1,23 @@
+<div th:fragment="navbar">
+    <nav class="bg-gray-50 dark:bg-gray-700">
+            <div class="max-w-screen-xl  mx-auto">
+                <div class="flex items-center">
+                    <div class="flex flex-row font-medium mt-0 rtl:space-x-reverse text-sm">
+                        <div class="px-4 py-3 dark:hover:bg-gray-800">
+                            <a th:href="@{/user/welcome}" class="text-gray-900 dark:text-white dark:hover:underline"
+                                aria-current="page">Welcome</a>
+                        </div>
+                        <div class="px-4 py-3 dark:hover:bg-gray-800">
+                            <a th:href="@{/user/order}" class="text-gray-900 dark:text-white dark:hover:underline">Order</a>
+                        </div>
+                        <div class="px-4 py-3 dark:hover:bg-gray-800">
+                            <a th:href="@{/user/portfolio}" class="text-gray-900 dark:text-white dark:hover:underline">Portfolio</a>
+                        </div>
+                        <div class="px-4 py-3 dark:hover:bg-gray-800">
+                            <a th:href="@{/user/profile}" class="text-gray-900 dark:text-white ">Profile</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+</div>
