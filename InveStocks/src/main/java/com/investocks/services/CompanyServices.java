@@ -9,5 +9,6 @@ public interface CompanyServices {
 
     public List<Company> getCompanyList();
     public Optional<Company> getCompanyByName(String name);
+    public Optional<Company> getCompanyById(int id);
     public void updateCompanyOnTrade(Company company, int price);
 }

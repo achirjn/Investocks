@@ -1,6 +1,7 @@
 package com.investocks.controllers;
 
 import static java.lang.Integer.min;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +22,8 @@ import com.investocks.entities.ShareBalance;
 import com.investocks.entities.Trade;
 import com.investocks.entities.User;
 import com.investocks.forms.OrderForm;
+import com.investocks.forms.PendingOrders;
+import com.investocks.forms.UserPortfolio;
 import com.investocks.helper.Helper;
 import com.investocks.helper.Message;
 import com.investocks.helper.MessageType;
@@ -141,11 +144,52 @@ public class UserController {
     }
     @GetMapping("/portfolio")
     public String getMethodName(HttpSession session, Model model) {
-        String userName = (String)session.getAttribute("loggedInUser");
-        System.out.println(userName);
-        model.addAttribute("loggedUser", userName);
+        String userEmail = (String)session.getAttribute("loggedInUser");
+        System.out.println(userEmail);
+        
+        Optional<User> optionalUser = userServices.findByEmail(userEmail);
+        model.addAttribute("userDetails", optionalUser.get());
+        
+        List<ShareBalance> shares = shareBalanceServices.getBalanceOfUser(optionalUser.get());
+        List<UserPortfolio> userPortfolioEntries = new ArrayList<>(shares.size());
+        
+        for(int i=0;i<shares.size();i++){
+            String companyName = shares.get(i).getCompany().getName();
+            float companyCurrentPrice = shares.get(i).getCompany().getCurrentPrice();
+            float totalAmountSpent = shares.get(i).getAmountSpent();
+            int shareCount = shares.get(i).getQuantity();
+            float currentProfit = ((companyCurrentPrice*shareCount) - totalAmountSpent) / totalAmountSpent;
+            
+            UserPortfolio userPortfolio = new UserPortfolio(companyName, shareCount, companyCurrentPrice, currentProfit);
+            userPortfolioEntries.add(userPortfolio);
+        }
+        model.addAttribute("userPortfolioEntries", userPortfolioEntries);
+        
+        model.addAttribute("loggedUser", userEmail);
         return "portfolio";
     }
+    
+    @GetMapping("/pending-orders")
+    public String pendingOrder(Model model, HttpSession session) {
+        
+        String userEmail = (String)session.getAttribute("loggedInUser");
+        Optional<User> optionalUser = userServices.findByEmail(userEmail);
+        List<Bid> pendingBids = bidServices.pendingBids(optionalUser.get().getId());
+        List<PendingOrders> pendingOrders = new ArrayList<>();
+        for(int i=0;i<pendingBids.size();i++){
+            PendingOrders pending = new PendingOrders(pendingBids.get(i).getCompany().getName(),"Buy",pendingBids.get(i).getPrice(),pendingBids.get(i).getRemainingQty(),pendingBids.get(i).getPlacedTime());
+            pendingOrders.add(pending);
+        }
+        List<Ask> pendingAsks = askServices.pendingAsks(optionalUser.get().getId());
+        for(int i=0;i<pendingAsks.size();i++){
+            PendingOrders pending = new PendingOrders(pendingAsks.get(i).getCompany().getName(),"Sell",pendingAsks.get(i).getPrice(),pendingAsks.get(i).getRemainingQty(),pendingAsks.get(i).getPlacedTime());
+            pendingOrders.add(pending);
+        }
+        
+        model.addAttribute("pendingOrders", pendingOrders);
+        return "pendingOrders";
+    }
+    
 
     public void checkTrade(Company company){
         int i=0;//to prevent infinite loop
@@ -182,14 +226,14 @@ public class UserController {
         askServices.updateAsk(askChanges);
 
         if(!shareBalanceServices.getBalanceOfUserForCompany(bid.getUser(), company).isPresent()){
-            ShareBalance newShareBalance = new ShareBalance(company, tradeQuantity, bid.getUser());
+            ShareBalance newShareBalance = new ShareBalance(tradeQuantity,tradeAmount, company, bid.getUser());
             shareBalanceServices.newBalanceEntry(newShareBalance);
         }
-        else shareBalanceServices.addBalance(bid.getUser(), company, tradeQuantity);
-        shareBalanceServices.subtractBalance(ask.getUser(), company, tradeQuantity);
+        else shareBalanceServices.addBalance(bid.getUser(), company, tradeQuantity, tradeAmount);
+        shareBalanceServices.subtractBalance(ask.getUser(), company, tradeQuantity, tradeAmount);
 
-        userServices.updateUserBalance(bid.getUser().getId(), tradeAmount);
-        userServices.updateUserBalance(ask.getUser().getId(), (-1)*tradeAmount);
+        userServices.updateUserBalance(bid.getUser().getId(), (-1)*tradeAmount);
+        userServices.updateUserBalance(ask.getUser().getId(), tradeAmount);
 
         companyServices.updateCompanyOnTrade(company, tradePrice);
 

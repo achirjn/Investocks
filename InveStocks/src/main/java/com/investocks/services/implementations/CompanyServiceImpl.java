@@ -26,6 +26,10 @@ public class CompanyServiceImpl implements CompanyServices{
     public Optional<Company> getCompanyByName(String name) {
         return companyRepo.findByName(name);
     }
+    @Override
+    public Optional<Company> getCompanyById(int id) {
+        return companyRepo.findById(id);
+    }
 
     @Transactional
     @Override

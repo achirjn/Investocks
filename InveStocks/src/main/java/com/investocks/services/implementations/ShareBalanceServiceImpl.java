@@ -1,5 +1,6 @@
 package com.investocks.services.implementations;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,17 +24,21 @@ public class ShareBalanceServiceImpl implements ShareBalanceServices{
     }
     @Override
     @Transactional
-    public void addBalance(User user, Company company, int balance) {
-        shareBalanceRepository.addShareBalance(user.getId(), company.getId(), balance);
+    public void addBalance(User user, Company company, int balance, float tradeAmount) {
+        shareBalanceRepository.addShareBalance(user.getId(), company.getId(), balance, tradeAmount);
     }
     @Override
     @Transactional
-    public void  subtractBalance(User user, Company company, int balance) {
-        shareBalanceRepository.subtractShareBalance(user.getId(), company.getId(), balance);
+    public void  subtractBalance(User user, Company company, int balance, float tradeAmount) {
+        shareBalanceRepository.subtractShareBalance(user.getId(), company.getId(), balance, tradeAmount);
     }
     @Override
     public ShareBalance newBalanceEntry(ShareBalance shareBalance) {
         return shareBalanceRepository.save(shareBalance);
     }
-
+    @Override
+    public List<ShareBalance> getBalanceOfUser(User user) {
+        return shareBalanceRepository.findByUser(user.getId());
+    }
+    
 }

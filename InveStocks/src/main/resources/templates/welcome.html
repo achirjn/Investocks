@@ -6,13 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/output.css">
     <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
-    <title>Welcom</title>
+    <title>Welcome</title>
 </head>
 
-<body>
+<body class="bg-gray-400">
     <div th:replace="~{header :: header('Log Out','User')}"></div>
     <div th:replace="~{navbar :: navbar}"></div>
-    <div class="p-7 m-7">
+
+    <!-- to show current trades -->
+    <!-- <div class="p-7 m-7">
         <div class="flex">
             <div>
                 <a href="#"
@@ -48,9 +50,9 @@
                 </a>
             </div>
 
-        </div>
+        </div> -->
 
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg m-4">
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -90,7 +92,14 @@
                         </td>
                         <td th:text="${company.currentPrice}" class="px-6 py-4">
                         </td>
-                        <td th:text="${company.profit}" class="px-6 py-4">
+                        <td class="px-6 py-4">
+                            <div th:if="${company.profit > 0}" th:text="'+'+${company.profit}" class="flex items-center text-green-600">
+                            </div>
+                            <div th:if="${company.profit < 0}" th:text="${company.profit}" class="flex items-center text-red-700">
+                            </div>
+                            <div th:if="${company.profit == 0}" class="flex items-center text-white">
+                                0
+                            </div>
                         </td>
                         <td th:text="${company.circuitLimit}" class="px-6 py-4">
                         </td>

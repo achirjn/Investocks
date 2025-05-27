@@ -21,4 +21,7 @@ public interface AskRepo extends JpaRepository<Ask, Integer>{
     @Modifying
     @Query(value="update ask set remaining_qty = ?4 where user_id = ?1 and company_id = ?2 and placed_time = ?3;", nativeQuery=true)
     public void updateAsk(int userId, int companyId, LocalDateTime dateTime, int qty);
+
+    @Query(value="select * from ask where user_id = ?1 and remaining_qty > 0 order by placed_time desc;", nativeQuery=true)
+    public List<Ask> pendingAskOfUser(int userId);
 }

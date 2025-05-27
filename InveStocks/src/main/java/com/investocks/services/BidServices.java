@@ -9,4 +9,5 @@ public interface BidServices {
     public Bid placeBid(Bid bid);
     public List<Bid> bidSequenceForCompany(int companyId);
     public void updateBid(Bid bid);
+    public List<Bid> pendingBids(int userId);
 }

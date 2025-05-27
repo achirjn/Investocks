@@ -28,4 +28,9 @@ public class AskServiceImpl implements AskServices{
     public void updateAsk(Ask ask) {
         askRepository.updateAsk(ask.getUser().getId(), ask.getCompany().getId(), ask.getPlacedTime(), ask.getRemainingQty());
     }
+
+    @Override
+    public List<Ask> pendingAsks(int userId){
+        return askRepository.pendingAskOfUser(userId);
+    }
 }

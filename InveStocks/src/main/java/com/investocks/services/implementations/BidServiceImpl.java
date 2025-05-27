@@ -29,4 +29,9 @@ public class BidServiceImpl implements BidServices{
         bidRepository.updateBid(bid.getUser().getId(), bid.getCompany().getId(), bid.getPlacedTime(), bid.getRemainingQty());
     }
 
+    @Override
+    public List<Bid> pendingBids(int userId){
+        return bidRepository.pendingBidsOfUser(userId);
+    }
+
 }

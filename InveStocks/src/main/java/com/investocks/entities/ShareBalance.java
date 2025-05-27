@@ -21,6 +21,7 @@ public class ShareBalance {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
     private int quantity;
+    private float amountSpent=0;
 
     @ManyToOne
     @JoinColumn(name="company_id")
@@ -29,9 +30,17 @@ public class ShareBalance {
     @JoinColumn(name="user_id")
     private User user;
 
-    public ShareBalance(Company company, int quantity, User user) {
-        this.company = company;
+    // public ShareBalance(Company company, int quantity, User user) {
+    //     this.company = company;
+    //     this.quantity = quantity;
+    //     this.user = user;
+    // }
+
+    public ShareBalance(int quantity, float amountSpent, Company company, User user) {
         this.quantity = quantity;
+        this.amountSpent = amountSpent;
+        this.company = company;
         this.user = user;
     }
+
 }

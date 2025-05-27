@@ -20,6 +20,7 @@ public class Company{
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
+    private String profilePic;
     private String name;
     @Column(name="circuit_limit")
     private float circuitLimit;

@@ -19,5 +19,8 @@ public interface BidRepo extends JpaRepository<Bid, Integer>{
     @Modifying
     @Query(value="update bid set remaining_qty = ?4 where user_id = ?1 and company_id = ?2 and placed_time = ?3;", nativeQuery=true)
     public void updateBid(int userId, int companyId, LocalDateTime dateTime, int qty);
+
+    @Query(value="select * from bid where user_id = ?1 and remaining_qty > 0 order by placed_time desc;", nativeQuery=true)
+    public List<Bid> pendingBidsOfUser(int userId);
 }
 
