@@ -1,9 +1,10 @@
 package com.investocks.entities;
 
+import com.investocks.entities.compositeKeys.ShareBalanceCK;
+
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
@@ -16,31 +17,20 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@IdClass(ShareBalanceCK.class)// for 2nd method(ck creation), no need for @IdClass, and inplace of @Id use @EmbeddedId. Also use @Embeddable over the ck class
 public class ShareBalance {
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int id;
+
     private int quantity;
     private float amountSpent=0;
 
+    @Id
     @ManyToOne
     @JoinColumn(name="company_id")
     private Company company;
+
+    @Id
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
-
-    // public ShareBalance(Company company, int quantity, User user) {
-    //     this.company = company;
-    //     this.quantity = quantity;
-    //     this.user = user;
-    // }
-
-    public ShareBalance(int quantity, float amountSpent, Company company, User user) {
-        this.quantity = quantity;
-        this.amountSpent = amountSpent;
-        this.company = company;
-        this.user = user;
-    }
 
 }
